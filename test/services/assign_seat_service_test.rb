@@ -9,7 +9,8 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     seats = service.init_seats dimensions
     only_group = seats[0]
 
-    puts "created seats: #{seats}"
+    print "\ninit seats for [[1,2]]:"
+    Array2dUtils.array_2D_print seats
 
     assert_equal 2, only_group.length
     assert_equal 1, only_group[0].length
@@ -22,7 +23,8 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     seats = service.init_seats dimensions
     only_group = seats[0]
 
-    puts "created seats: #{seats}"
+    print "\ninit seats for [[2,2]]:"
+    Array2dUtils.array_2D_print seats
 
     assert_equal 2, only_group.length
     assert_equal 2, only_group[0].length
@@ -34,7 +36,8 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     service = AssignSeatService.new
     seats = service.init_seats dimensions
 
-    puts "created seats: #{seats}"
+    print "\ninit seats for [[1,2], [1,2]]:"
+    Array2dUtils.array_2D_print seats
 
     group1 = seats[0]
     assert_equal 2, group1.length
@@ -52,7 +55,8 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     service = AssignSeatService.new
     seats = service.init_seats dimensions
 
-    puts "created seats: #{seats}"
+    print "\ninit seats for [[2,2], [2,2]]:"
+    Array2dUtils.array_2D_print seats
 
     group1 = seats[0]
     assert_equal 2, group1.length
@@ -70,7 +74,8 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     service = AssignSeatService.new
     seats = service.init_seats dimensions
 
-    puts "created seats: #{seats}"
+    print "\ninit seats for [[3,2], [4,3], [2,3], [3,4]]:"
+    Array2dUtils.array_2D_print seats
 
     group1 = seats[0]
     assert_equal 2, group1.length

@@ -40,6 +40,30 @@ class AssignSeatService
     false
   end
 
+  def is_window_seat(col_index, current_group, group_number)
+    last_col_index = current_group[0].size - 1
+
+    # if is window seat of 1st group
+    if group_number == 1
+      if col_index == 0
+        return true
+      else
+        return false
+      end
+    end
+
+    # if is aisle seat of last group
+    if group_number == @group_size
+      if col_index == last_col_index
+        return true
+      else
+        return false
+      end
+    end
+
+    false
+  end
+
   def init_seats(dimensions)
     seats = []
     dimensions.each do |d|

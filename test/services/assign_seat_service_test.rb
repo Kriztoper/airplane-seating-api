@@ -102,5 +102,35 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     assert_equal 3, group4[3].length
   end
 
+  test 'assign passengers to seats [[3,2], [4,3], [2,3], [3,4]]' do
+    dimensions = [[3,2], [4,3], [2,3], [3,4]]
+    service = AssignSeatService.new
+    seats = service.assign dimensions, 30
+
+    print "\nresult of init seats for [[3,2], [4,3], [2,3], [3,4]]:"
+    Array2dUtils.array_2D_print seats
+
+    expected_seating_arrangement = [
+      [[19, 25, 1],
+       [21, 29, 7]],
+
+      [[2, 26, 27, 3],
+       [8, 30, 0, 9],
+       [13, 0, 0, 14]],
+
+      [[4, 5],
+       [10, 11],
+       [15, 16]],
+
+      [[6, 28, 20],
+       [12, 0, 22],
+       [17, 0, 23],
+       [18, 0, 24]]
+    ]
+
+    assert_equal expected_seating_arrangement, seats
+
+  end
+
 end
 

@@ -4,6 +4,10 @@ require 'test_helper'
 
 class AssignSeatServiceTest < ActiveSupport::TestCase
   test '1 group of seats with 1 column and 2 rows' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
     dimensions = [[1,2]]
     service = AssignSeatService.new
     seats = service.init_seats dimensions
@@ -18,6 +22,10 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
   end
 
   test '1 group of seats with 2 columns and 2 rows' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
     dimensions = [[2,2]]
     service = AssignSeatService.new
     seats = service.init_seats dimensions
@@ -32,6 +40,10 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
   end
 
   test '2 groups of seats with 1 column and 2 rows' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
     dimensions = [[1,2], [1,2]]
     service = AssignSeatService.new
     seats = service.init_seats dimensions
@@ -51,6 +63,10 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
   end
 
   test '2 groups of seats with 2 columns and 2 rows' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
     dimensions = [[2,2], [2,2]]
     service = AssignSeatService.new
     seats = service.init_seats dimensions
@@ -70,6 +86,10 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
   end
 
   test '[[3,2], [4,3], [2,3], [3,4]]' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
     dimensions = [[3,2], [4,3], [2,3], [3,4]]
     service = AssignSeatService.new
     seats = service.init_seats dimensions
@@ -103,6 +123,10 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
   end
 
   test 'assign passengers to seats [[3,2], [4,3], [2,3], [3,4]]' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
     dimensions = [[3,2], [4,3], [2,3], [3,4]]
     service = AssignSeatService.new
     seats = service.assign dimensions, 30

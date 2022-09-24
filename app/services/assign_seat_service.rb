@@ -44,18 +44,7 @@ class AssignSeatService
       group_number += 1
     end
 
-    passenger_count = 1
-
-    aisle_seats = aisle_seats.sort_by { |a| [a.x, a.group, a.y] }
-    passenger_count = assign_passengers_to_grouped_seats(aisle_seats, num_passengers, passenger_count, seats)
-
-    window_seats = window_seats.sort_by { |w| [w.x, w.group, w.y] }
-    passenger_count = assign_passengers_to_grouped_seats(window_seats, num_passengers, passenger_count, seats)
-
-    center_seats = center_seats.sort_by { |c| [c.x, c.group, c.y] }
-    assign_passengers_to_grouped_seats(center_seats, num_passengers, passenger_count, seats)
-
-    seats
+    assign_passengers_to_all_grouped_seats(aisle_seats, center_seats, num_passengers, seats, window_seats)
   end
 
   def is_aisle_seat(col_index, current_group, group_number)
@@ -123,6 +112,21 @@ class AssignSeatService
   end
 
   private
+
+  def assign_passengers_to_all_grouped_seats(aisle_seats, center_seats, num_passengers, seats, window_seats)
+    passenger_count = 1
+
+    aisle_seats = aisle_seats.sort_by { |a| [a.x, a.group, a.y] }
+    passenger_count = assign_passengers_to_grouped_seats(aisle_seats, num_passengers, passenger_count, seats)
+
+    window_seats = window_seats.sort_by { |w| [w.x, w.group, w.y] }
+    passenger_count = assign_passengers_to_grouped_seats(window_seats, num_passengers, passenger_count, seats)
+
+    center_seats = center_seats.sort_by { |c| [c.x, c.group, c.y] }
+    assign_passengers_to_grouped_seats(center_seats, num_passengers, passenger_count, seats)
+
+    seats
+  end
 
   def assign_passengers_to_grouped_seats(grouped_seats, num_passengers, passenger_count, seats)
     grouped_seats.each do |seat|

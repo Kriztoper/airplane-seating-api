@@ -51,3 +51,16 @@ A simple REST API that helps seat audiences in a flight from aisle seats to wind
 
   }
   ```
+
+# Testing the API
+
+Note: Run the specified command on a terminal to check, also make sure that you have `curl` installed locally, if not
+just test the API on alternative local API platforms like Postman or Insomnia
+
+1. Call the API endpoint for assigning seats to passengers passing in through the body params the number of passengers
+and the dimensions for the seats e.g. [[3,2], [4,3], [2,3], [3,4]]
+
+command (_Note: replace num_passengers, and seats_dimensions with the values you want to pass thru body params_):
+`curl -X POST -d num_passengers=30 -d seats_dimensions='[[3,2], [4,3], [2,3], [3,4]]' http://0.0.0.0:3000/seats/assign-to-passengers`
+
+Output: `[[[19,25,1],[21,29,7]],[[2,26,27,3],[8,30,0,9],[13,0,0,14]],[[4,5],[10,11],[15,16]],[[6,28,20],[12,0,22],[17,0,23],[18,0,24]]]`

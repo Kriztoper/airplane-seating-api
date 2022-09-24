@@ -122,6 +122,33 @@ class AssignSeatServiceTest < ActiveSupport::TestCase
     assert_equal 3, group4[3].length
   end
 
+  test 'assign passengers to seats [[3,1], [4,3], [1,2], scenario where a group of window seats has only one column' do
+    puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    puts "Test class: #{self.class.name}"
+    puts "Test method: #{self.method_name}"
+
+    dimensions = [[3,1], [4,3], [1,2]]
+    service = AssignSeatService.new
+    seats = service.assign dimensions, 12
+
+    print "\nresult of init seats for [[3,1], [4,3], [1,2]:"
+    Array2dUtils.array_2D_print seats
+
+    expected_seating_arrangement = [
+      [[8, 11, 1]],
+
+      [[2, 12, 0, 3],
+       [4, 0, 0, 5],
+       [6, 0, 0, 7]],
+
+      [[9],
+       [10]]
+    ]
+
+    assert_equal expected_seating_arrangement, seats
+
+  end
+
   test 'assign passengers to seats [[3,6], [4,3]]' do
     puts "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     puts "Test class: #{self.class.name}"

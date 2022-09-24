@@ -5,16 +5,7 @@ class AssignSeatService
 
     aisle_seats, center_seats, window_seats = group_seats(seats)
 
-    seats.each do |group|
-      group.each_with_index do |row, row_index|
-        row.each_with_index do |_, col_index|
-          group_seats(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
-        end
-      end
-      group_number += 1
-    end
-
-    assign_passengers_to_all_grouped_seats(aisle_seats, center_seats, num_passengers, seats, window_seats)
+    seat_passengers_by_group(aisle_seats, window_seats, center_seats, num_passengers, seats)
   end
 
   def group_seats(seats)
@@ -27,7 +18,8 @@ class AssignSeatService
     seats.each do |group|
       group.each_with_index do |row, row_index|
         row.each_with_index do |_, col_index|
-          assign_seats_to_groups(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
+          assign_seats_to_groups(aisle_seats, window_seats, center_seats,
+                                 row_index, col_index, group, group_number, group_size)
         end
       end
       group_number += 1
@@ -109,23 +101,23 @@ class AssignSeatService
     end
   end
 
-  def assign_passengers_to_all_grouped_seats(aisle_seats, center_seats, num_passengers, seats, window_seats)
+  def seat_passengers_by_group(aisle_seats, window_seats, center_seats, num_passengers, seats)
     passenger_count = 1
 
     aisle_seats = aisle_seats.sort_by { |a| [a.x, a.group, a.y] }
-    passenger_count = assign_passengers_to_grouped_seats(aisle_seats, num_passengers, passenger_count, seats)
+    passenger_count = fill_seats(aisle_seats, num_passengers, passenger_count, seats)
 
     window_seats = window_seats.sort_by { |w| [w.x, w.group, w.y] }
-    passenger_count = assign_passengers_to_grouped_seats(window_seats, num_passengers, passenger_count, seats)
+    passenger_count = fill_seats(window_seats, num_passengers, passenger_count, seats)
 
     center_seats = center_seats.sort_by { |c| [c.x, c.group, c.y] }
-    assign_passengers_to_grouped_seats(center_seats, num_passengers, passenger_count, seats)
+    fill_seats(center_seats, num_passengers, passenger_count, seats)
 
     seats
   end
 
-  def assign_passengers_to_grouped_seats(grouped_seats, num_passengers, passenger_count, seats)
-    grouped_seats.each do |seat|
+  def fill_seats(grouped_seat, num_passengers, passenger_count, seats)
+    grouped_seat.each do |seat|
 
       if passenger_count > num_passengers
         break;

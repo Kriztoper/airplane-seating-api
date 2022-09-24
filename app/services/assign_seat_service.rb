@@ -47,43 +47,13 @@ class AssignSeatService
     passenger_count = 1
 
     aisle_seats = aisle_seats.sort_by { |a| [a.x, a.group, a.y] }
-    aisle_seats.each do |seat|
-
-      if passenger_count > num_passengers
-        break;
-      end
-
-      print seat
-      seats[seat.group - 1][seat.x][seat.y] = passenger_count
-      seat.passenger_num = passenger_count
-      passenger_count += 1
-    end
+    passenger_count = assign_passengers_to_grouped_seats(aisle_seats, num_passengers, passenger_count, seats)
 
     window_seats = window_seats.sort_by { |w| [w.x, w.group, w.y] }
-    window_seats.each do |seat|
-
-      if passenger_count > num_passengers
-        break;
-      end
-
-      print seat
-      seats[seat.group - 1][seat.x][seat.y] = passenger_count
-      seat.passenger_num = passenger_count
-      passenger_count += 1
-    end
+    passenger_count = assign_passengers_to_grouped_seats(window_seats, num_passengers, passenger_count, seats)
 
     center_seats = center_seats.sort_by { |c| [c.x, c.group, c.y] }
-    center_seats.each do |seat|
-
-      if passenger_count > num_passengers
-        break;
-      end
-
-      print seat
-      seats[seat.group - 1][seat.x][seat.y] = passenger_count
-      seat.passenger_num = passenger_count
-      passenger_count += 1
-    end
+    assign_passengers_to_grouped_seats(center_seats, num_passengers, passenger_count, seats)
 
     seats
   end
@@ -129,7 +99,7 @@ class AssignSeatService
       end
     end
 
-    # if is aisle seat of last group
+    # if is window seat of last group
     if group_number == @group_size
       if col_index == last_col_index
         return true
@@ -150,6 +120,24 @@ class AssignSeatService
       seats.push group
     end
     seats
+  end
+
+  private
+
+  def assign_passengers_to_grouped_seats(grouped_seats, num_passengers, passenger_count, seats)
+    grouped_seats.each do |seat|
+
+      if passenger_count > num_passengers
+        break;
+      end
+
+      print seat
+      seats[seat.group - 1][seat.x][seat.y] = passenger_count
+      seat.passenger_num = passenger_count
+      passenger_count += 1
+    end
+
+    passenger_count
   end
 
 end

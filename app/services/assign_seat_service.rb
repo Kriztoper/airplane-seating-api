@@ -22,21 +22,12 @@ class AssignSeatService
           @max_row_index = row_index
         end
 
-        row.each_with_index do |seat, col_index|
+        row.each_with_index do |_, col_index|
 
           puts "row_index: #{row_index}, col_index: #{col_index}"
           puts "is_aisle_seat: #{is_aisle_seat(col_index, group, group_number, group_size)}"
           puts "is_window_seat: #{is_window_seat(col_index, group, group_number, group_size)}"
-          if is_aisle_seat(col_index, group, group_number, group_size)
-            seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
-            aisle_seats.append seat
-          elsif is_window_seat(col_index, group, group_number, group_size)
-            seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
-            window_seats.append seat
-          else
-            seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
-            center_seats.append seat
-          end
+          group_seats(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
           passenger_count += 1
         end
         puts "row after: #{row}"
@@ -106,6 +97,19 @@ class AssignSeatService
   end
 
   private
+
+  def group_seats(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
+    if is_aisle_seat(col_index, group, group_number, group_size)
+      seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
+      aisle_seats.append seat
+    elsif is_window_seat(col_index, group, group_number, group_size)
+      seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
+      window_seats.append seat
+    else
+      seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
+      center_seats.append seat
+    end
+  end
 
   def assign_passengers_to_all_grouped_seats(aisle_seats, center_seats, num_passengers, seats, window_seats)
     passenger_count = 1

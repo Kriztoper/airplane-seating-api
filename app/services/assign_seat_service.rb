@@ -3,11 +3,7 @@ class AssignSeatService
   def assign(dimensions, num_passengers)
     seats = init_seats dimensions
 
-    group_size = seats.size
-    group_number = 1
-    aisle_seats = []
-    window_seats = []
-    center_seats = []
+    aisle_seats, center_seats, window_seats = group_seats(seats)
 
     seats.each do |group|
       group.each_with_index do |row, row_index|
@@ -19,6 +15,25 @@ class AssignSeatService
     end
 
     assign_passengers_to_all_grouped_seats(aisle_seats, center_seats, num_passengers, seats, window_seats)
+  end
+
+  def group_seats(seats)
+    group_size = seats.size
+    group_number = 1
+    aisle_seats = []
+    window_seats = []
+    center_seats = []
+
+    seats.each do |group|
+      group.each_with_index do |row, row_index|
+        row.each_with_index do |_, col_index|
+          assign_seats_to_groups(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
+        end
+      end
+      group_number += 1
+    end
+
+    [aisle_seats, center_seats, window_seats]
   end
 
   def is_aisle_seat(col_index, current_group, group_number, group_size)
@@ -81,7 +96,7 @@ class AssignSeatService
 
   private
 
-  def group_seats(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
+  def assign_seats_to_groups(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
     if is_aisle_seat(col_index, group, group_number, group_size)
       seat = Seat.new group: group_number, x: row_index, y: col_index, airplane_id: 1
       aisle_seats.append seat

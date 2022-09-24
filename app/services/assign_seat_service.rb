@@ -4,33 +4,16 @@ class AssignSeatService
     seats = init_seats dimensions
 
     group_size = seats.size
-    puts "group size: #{group_size}"
-    @max_row_index = 0
-
-    passenger_count = 1
     group_number = 1
     aisle_seats = []
     window_seats = []
     center_seats = []
+
     seats.each do |group|
-      puts "\ngroup #{group_number}: #{group}"
-
       group.each_with_index do |row, row_index|
-        puts "row before: #{row}"
-
-        if row_index > @max_row_index
-          @max_row_index = row_index
-        end
-
         row.each_with_index do |_, col_index|
-
-          puts "row_index: #{row_index}, col_index: #{col_index}"
-          puts "is_aisle_seat: #{is_aisle_seat(col_index, group, group_number, group_size)}"
-          puts "is_window_seat: #{is_window_seat(col_index, group, group_number, group_size)}"
           group_seats(aisle_seats, window_seats, center_seats, row_index, col_index, group, group_number, group_size)
-          passenger_count += 1
         end
-        puts "row after: #{row}"
       end
       group_number += 1
     end
@@ -133,7 +116,6 @@ class AssignSeatService
         break;
       end
 
-      print seat
       seats[seat.group - 1][seat.x][seat.y] = passenger_count
       seat.passenger_num = passenger_count
       passenger_count += 1

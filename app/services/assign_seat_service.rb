@@ -37,6 +37,11 @@ class AssignSeatService
     is_first_group = group_number == 1
     is_last_group = group_number == group_size
 
+    # if is 1st or last group and has only one column then it's considered as window seat
+    if is_first_group or is_last_group and is_first_column and is_last_column
+      return false
+    end
+
     # if is aisle seat of 1st group
     if is_first_group
       return is_last_column
